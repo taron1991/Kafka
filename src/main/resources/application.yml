@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  kafka:
+    consumer:
+      value-deserializer:  org.springframework.kafka.support.serializer.JsonDeserializer
+      bootstrap-servers: localhost:9092
+      group-id:
+        string: group_id_string
+        object: group_id_object
+        number: group_id_number
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: com.example.kafkademo.model
+
+
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer:  org.springframework.kafka.support.serializer.JsonSerializer
+
+
+  #Ключи в Kafka обычно сериализуются как строки ( StringSerializer ), поскольку ключи часто
+  #используются для маршрутизации сообщений на различные партиции в теме Kafka. Строковый
+  #ключ является удобным и распространенным способом определения ключа сообщения.
+
+
+
+  # Если класс находится в пакете, который не указан в списке доверенных пакетов,
+  #Spring отклонит попытку десериализации из соображений безопасности.
+

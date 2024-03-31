@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    # можно НЕ указывать порт!!!! 2181 для сервиса Zookeeper, поскольку внешний доступ к Zookeeper не требуется, и контейнер Kafka будет общаться с контейнером Zookeeper внутри сети Docker.
+    #!!ports:
+    #!!! - 2181:2181
+    container_name: zookeeper
+
+  kafka1:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - 9092:9092
+    environment:
+      # ВЫБОРОЧНАЯ НАСТРОЙКА
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      # ОБЯЗАТЕЛЬНАЯ НАСТРОЙКА как подключаться к Zookeeper для управления состоянием кластера Kafka.
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # это настройка, которая создает тестовую тему "test_topic" с одним репликой и тремя партициями при запуске контейнера Kafka.
+      KAFKA_CREATE_TOPIC: "test_topic:1:3"

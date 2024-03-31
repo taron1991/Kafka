@@ -1,3 +1,4 @@
+# ЕСЛИ ИСПОЛЬЗУЕМ DOCKER COMPOSE YML НЕ НУЖЕН!!!!
 server:
   port: 8080
 
